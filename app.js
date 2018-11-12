@@ -5,12 +5,10 @@ new Vue({
     playerHealth: 100,
     monsterHealth: 100,
     started: false,
-    actions: [
-
-    ],
+    actions: [],
     monsterAttackMsg: "Monster hits player for",
     playerAttackMsg: "Player hits monster for",
-    healMsg:'Player heals himself for',
+    healMsg: "Player heals himself for"
   },
   computed: {
     playerHealthColor: function() {
@@ -29,32 +27,36 @@ new Vue({
     }
   },
   methods: {
-    attack: function() {
-      const playerDamage = Math.floor(Math.random() * 10);
-      const monsterDamage = Math.floor(Math.random() * 10);
+    attack: function(bonus=0) {
+      const playerAttackDamage = Math.floor(Math.random() * 10) + bonus;
+      const monsterAttackDamage = Math.floor(Math.random() * 10);
 
-      this.actions = [{ type: "playerAttack", hp: playerDamage },{ type: "monsterAttack", hp: monsterDamage }].concat(this.actions)
+      this.actions = [
+        { type: "playerAttack", hp: playerAttackDamage },
+        { type: "monsterAttack", hp: monsterAttackDamage }
+      ].concat(this.actions);
 
-      this.playerHealth = Math.max(this.playerHealth - playerDamage, 0);
-      this.monsterHealth = Math.max(this.monsterHealth - monsterDamage, 0);
-      console.log(this.actions)
+      this.playerHealth = Math.max(this.playerHealth - monsterAttackDamage, 0);
+      this.monsterHealth = Math.max(this.monsterHealth - playerAttackDamage, 0);
+      console.log(this.actions);
     },
     heal: function() {
-        const playerHeal = Math.floor(Math.random() * 15);
+      const playerHeal = Math.floor(Math.random() * 15);
       const monsterDamage = Math.floor(Math.random() * 10);
 
-      this.playerHealth = Math.min(
-        this.playerHealth + playerHeal,
-        100
-      );
+      this.playerHealth = Math.min(this.playerHealth + playerHeal, 100);
       this.playerHealth = Math.max(0, this.playerHealth - monsterDamage);
-      
-      this.actions = [{ type: "heal", hp: playerHeal },{ type: "monsterAttack", hp: monsterDamage }].concat(this.actions)
+
+      this.actions = [
+        { type: "heal", hp: playerHeal },
+        { type: "monsterAttack", hp: monsterDamage }
+      ].concat(this.actions);
     },
     start: function() {
       this.started = true;
       this.playerHealth = 100;
       this.monsterHealth = 100;
+      this.actions = [];
     },
     giveUp: function() {
       this.started = false;
@@ -77,15 +79,15 @@ new Vue({
         color
       };
     },
-    getMessage:function(msg){
-        const message =
+    getMessage: function(msg) {
+      const message =
         msg.type === "monsterAttack"
           ? this.monsterAttackMsg
           : msg.type === "playerAttack"
           ? this.playerAttackMsg
           : this.healMsg;
 
-          return `${message} ${msg.hp} hit points`
+      return `${message} ${msg.hp} hit points`;
     }
   },
   watch: {

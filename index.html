@@ -37,8 +37,8 @@
       </section>
       <section class="row controls"  v-if="started">
         <div class="small-12 columns">
-          <button id="attack" @click="attack()">ATTACK</button>
-          <button id="special-attack">SPECIAL ATTACK</button>
+          <button id="attack" @click="attack(0)">ATTACK</button>
+          <button id="special-attack" @click="attack(Math.floor(Math.random() * 10))">SPECIAL ATTACK</button>
           <button id="heal"  @click="heal()">HEAL</button> <button id="give-up"  @click="giveUp()">GIVE UP</button>
         </div>
       </section>
