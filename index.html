@@ -45,7 +45,7 @@
       <section class="row log">
         <div class="small-12 columns">
           <ul>
-            <li></li>
+            <li v-for="msg in actions" :style="styleActionItem(msg)">{{getMessage(msg)}}</li>
           </ul>
         </div>
       </section>
