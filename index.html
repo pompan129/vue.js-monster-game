@@ -35,7 +35,7 @@
           <button id="start-game" @click="start()">START NEW GAME</button>
         </div>
       </section>
-      <section class="row controls"  v-if="started">
+      <section class="row controls"  v-else>
         <div class="small-12 columns">
           <button id="attack" @click="attack(0)">ATTACK</button>
           <button id="special-attack" @click="attack(Math.floor(Math.random() * 10))">SPECIAL ATTACK</button>

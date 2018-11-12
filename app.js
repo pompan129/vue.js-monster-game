@@ -27,7 +27,7 @@ new Vue({
     }
   },
   methods: {
-    attack: function(bonus=0) {
+    attack: function(bonus = 0) {
       const playerAttackDamage = Math.floor(Math.random() * 10) + bonus;
       const monsterAttackDamage = Math.floor(Math.random() * 10);
 
@@ -59,7 +59,13 @@ new Vue({
       this.actions = [];
     },
     giveUp: function() {
-      this.started = false;
+      const playAgain = confirm("YOU Quit! Chickeeeeen!!!! \n  Play again?");
+      if (playAgain) {
+          console.log(this)
+        this.start();
+      } else {
+        this.started = false;
+      }
     },
     styleActionItem: function(msg) {
       const backgroundColor =
@@ -91,10 +97,17 @@ new Vue({
     }
   },
   watch: {
-    playerHealth: function() {
-      setTimeout(() => {
-        this.value = 0;
-      }, 5000);
+    playerHealth: function(health) {
+      if (health <= 0) {
+        const playAgain = confirm("YOU LOST!  Play again?");
+        playAgain ? this.start() : this.giveUp();
+      }
+    },
+    monsterHealth: function(health) {
+      if (health <= 0) {
+        const playAgain = confirm("YOU WIN!  Play again?");
+        playAgain ? this.start() : this.giveUp();
+      }
     }
   }
 });
