@@ -4,6 +4,10 @@ new Vue({
         value: 0,
         playerHealth: 100,
         monsterHealth:100,
+        started:false,
+        actions:[],
+        monsterAttackMsg:'Monster hits player for ',
+        playerAttackMsg: 'Player hits monster for '
     },
     computed:{
         playerHealthColor:function(){
@@ -18,9 +22,24 @@ new Vue({
     },
     methods:{
         attack:function(){
+            const playerDamage =  Math.floor(Math.random() * 10);
+            const monsterDamage =  Math.floor(Math.random() * 10);
+
+            this.playerHealth = Math.max(this.playerHealth - playerDamage, 0);
+            this.monsterHealth = Math.max(this.monsterHealth - monsterDamage,0);
+        },
+        heal:function(){
+            this.playerHealth=Math.min(this.playerHealth + Math.floor(Math.random() * 15), 100) 
             this.playerHealth -=  Math.floor(Math.random() * 10);
-            this.monsterHealth -=  Math.floor(Math.random() * 10);
-        }        
+        },
+        start:function(){
+            this.started = true;
+            this.playerHealth = 100;
+            this.monsterHealth = 100;
+        },
+        giveUp:function(){
+            this.started = false;
+        }    
     },
     watch:{
         playerHealth:function(){

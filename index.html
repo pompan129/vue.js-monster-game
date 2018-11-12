@@ -24,22 +24,22 @@
           <div class="healthbar">
             <div
               class="healthbar text-center"
-              :style="{ backgroundColor: playerHealthColor, width: monsterHealth + '%', color: monsterHealth > 5? 'white':'black'}"
+              :style="{ backgroundColor: monsterHealthColor, width: monsterHealth + '%', color: monsterHealth > 5? 'white':'black'}"
               style="background-color: green; margin: 0; color: white;"
             >{{monsterHealth}}</div>
           </div>
         </div>
       </section>
-      <section class="row controls">
+      <section class="row controls" v-if="!started">
         <div class="small-12 columns">
-          <button id="start-game">START NEW GAME</button>
+          <button id="start-game" @click="start()">START NEW GAME</button>
         </div>
       </section>
-      <section class="row controls">
+      <section class="row controls"  v-if="started">
         <div class="small-12 columns">
           <button id="attack" @click="attack()">ATTACK</button>
           <button id="special-attack">SPECIAL ATTACK</button>
-          <button id="heal">HEAL</button> <button id="give-up">GIVE UP</button>
+          <button id="heal"  @click="heal()">HEAL</button> <button id="give-up"  @click="giveUp()">GIVE UP</button>
         </div>
       </section>
       <section class="row log">
